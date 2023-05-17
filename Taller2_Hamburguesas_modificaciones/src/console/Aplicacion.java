@@ -110,6 +110,7 @@ public class Aplicacion {
 	}
 	
 	private void agregarElementoAPedido() {
+		//TRY CATCH PARA EL EXCEPTION DE LOS PEDIDOS
 		try
 		{
 			if(restaurante.getPedidoEnCurso() == null) {
@@ -163,6 +164,8 @@ public class Aplicacion {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 	private void cerrarPedido() {
 		if(restaurante.getPedidoEnCurso() == null) {
