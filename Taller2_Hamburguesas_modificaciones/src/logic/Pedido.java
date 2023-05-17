@@ -8,12 +8,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import exceptions.PriceException;
+
 public class Pedido {
 	private int numeroPedidos;
 	private String idPedido;
 	private String nombreCliente;
 	private String direccionCliente;
 	private List<Producto> productos = new ArrayList<>();
+	//private List<Integer> productosPrecios = new ArrayList<>();
+	private int costico = 0;
 	
 	public Pedido(String nombreCliente, String direccionCliente, int numeroPedidos) {
 		this.nombreCliente = nombreCliente;
@@ -26,8 +30,16 @@ public class Pedido {
 		return idPedido;
 	}
 	
-	public void agregarProducto(Producto nuevoItem) {
+	public void agregarProducto(Producto nuevoItem) throws PriceException{
+		if ((nuevoItem.getPrecio() + costico) <= 150000){
 		productos.add(nuevoItem);
+		costico += nuevoItem.getPrecio();
+		}
+		else
+		{
+			throw new PriceException(nuevoItem.getPrecio());
+		}
+		
 	}
 
 	private int getPrecioNetoPedido() {

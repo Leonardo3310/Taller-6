@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
+import exceptions.PriceException;
 import logic.Producto;
 import logic.ProductoAjustado;
 import logic.ProductoMenu;
@@ -108,48 +110,57 @@ public class Aplicacion {
 	}
 	
 	private void agregarElementoAPedido() {
-		if(restaurante.getPedidoEnCurso() == null) {
-			System.out.println("No se ha iniciado ningun pedido.");
-		}else {
-			Producto producto;
-			System.out.println("\n\nAGREGAR ELEMENTO A PEDIDO\n");
-			System.out.println("1- Comidas\n2- Bebidas\n");
-			int comidaBebida = Integer.parseInt(input("R/"));
-			if(comidaBebida == 1) {
-				int elemento = Integer.parseInt(input("\nNumero del elemento"));
-				producto = restaurante.getMenuBase().get(elemento - 1);
-				if(producto instanceof ProductoMenu) {
-					ProductoMenu productoMenu = (ProductoMenu) producto;
-					System.out.println("\nDesea Agregar/Quitar ingrediente a " + producto.getNombre() + "\n\n1- Si\n2- No\n");
-					int agregarQuitar = Integer.parseInt(input("R/"));
-					if(agregarQuitar == 1) {
-						ProductoAjustado productoAjustado = new ProductoAjustado(productoMenu);
-						boolean continuar = true;
-						while(continuar) {
-							int indexIngrediente = Integer.parseInt(input("\nNumero del ingrediente"));
-							Ingrediente ingrediente = restaurante.getIngredientes().get(indexIngrediente - 1);
-							System.out.println("\nAgregar/Quitar " + ingrediente.getNombre() + "\n\n1- Agregar\n2- Quitar\n");
-							agregarQuitar =Integer.parseInt(input("R/"));
-							if(agregarQuitar == 1) {
-								productoAjustado.agregarIngrediente(ingrediente);
-							}else {
-								productoAjustado.quitarIngrediente(ingrediente);
-							}
-							System.out.println("\n\nDesea Agregar/Quitar otro ingrediente a " + producto.getNombre() + "\n\n1- Si\n2- No\n");
-							int opcion = Integer.parseInt(input("R/"));
-							if(opcion == 2) {
-								continuar = false;
-							}
-						}
-						producto = productoAjustado;
-					}
-				}
+		try
+		{
+			if(restaurante.getPedidoEnCurso() == null) {
+				System.out.println("No se ha iniciado ningun pedido.");
 			}else {
-				int elemento = Integer.parseInt(input("\nNumero del elemento"));
-				producto = restaurante.getBebidas().get(elemento - 1);
+				Producto producto;
+				System.out.println("\n\nAGREGAR ELEMENTO A PEDIDO\n");
+				System.out.println("1- Comidas\n2- Bebidas\n");
+				int comidaBebida = Integer.parseInt(input("R/"));
+				if(comidaBebida == 1) {
+					int elemento = Integer.parseInt(input("\nNumero del elemento"));
+					producto = restaurante.getMenuBase().get(elemento - 1);
+					if(producto instanceof ProductoMenu) {
+						ProductoMenu productoMenu = (ProductoMenu) producto;
+						System.out.println("\nDesea Agregar/Quitar ingrediente a " + producto.getNombre() + "\n\n1- Si\n2- No\n");
+						int agregarQuitar = Integer.parseInt(input("R/"));
+						if(agregarQuitar == 1) {
+							ProductoAjustado productoAjustado = new ProductoAjustado(productoMenu);
+							boolean continuar = true;
+							while(continuar) {
+								int indexIngrediente = Integer.parseInt(input("\nNumero del ingrediente"));
+								Ingrediente ingrediente = restaurante.getIngredientes().get(indexIngrediente - 1);
+								System.out.println("\nAgregar/Quitar " + ingrediente.getNombre() + "\n\n1- Agregar\n2- Quitar\n");
+								agregarQuitar =Integer.parseInt(input("R/"));
+								if(agregarQuitar == 1) {
+									productoAjustado.agregarIngrediente(ingrediente);
+								}else {
+									productoAjustado.quitarIngrediente(ingrediente);
+								}
+								System.out.println("\n\nDesea Agregar/Quitar otro ingrediente a " + producto.getNombre() + "\n\n1- Si\n2- No\n");
+								int opcion = Integer.parseInt(input("R/"));
+								if(opcion == 2) {
+									continuar = false;
+								}
+							}
+							producto = productoAjustado;
+						}
+					}
+				}else {
+					int elemento = Integer.parseInt(input("\nNumero del elemento"));
+					producto = restaurante.getBebidas().get(elemento - 1);
+				}
+				restaurante.getPedidoEnCurso().agregarProducto(producto);
+				System.out.println("\nSe agrego " + producto.getNombre() + " al pedido");
+				
 			}
-			restaurante.getPedidoEnCurso().agregarProducto(producto);
-			System.out.println("\nSe agrego " + producto.getNombre() + " al pedido");
+		}
+		catch (PriceException e)
+		{
+			e.getMessage();
+			e.printStackTrace();
 		}
 	}
 	

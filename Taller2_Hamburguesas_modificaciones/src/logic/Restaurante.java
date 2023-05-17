@@ -15,8 +15,10 @@ import exceptions.ProductoRepetidoException;
 
 public class Restaurante {
 	private List<Producto> menu = new ArrayList<>();
+	private List<String> menuName = new ArrayList<>();
 	private List<Producto> bebidas = new ArrayList<>();
 	private List<Ingrediente> ingredientes = new ArrayList<>();
+	private List<String> ingredientesName = new ArrayList<>();
 	private Map<String, Pedido> pedidos = new HashMap<>();
 	private Pedido pedido;
 	private int numeroPedidos = 0;
@@ -96,13 +98,20 @@ public class Restaurante {
 			int costoAdicional = Integer.parseInt(informacion[1]);
 			int calorias = Integer.parseInt(informacion[2]);
 			Ingrediente ingrediente = new Ingrediente(nombre, costoAdicional, calorias);
+			//zona taller 6 exceptions
+			
 			if (ingredientes.contains(ingrediente))
+			{
+				throw new IngredienteRepetidoException(ingrediente.getNombre());
+			}
+			else if (ingredientesName.contains(ingrediente.getNombre()))
 			{
 				throw new IngredienteRepetidoException(ingrediente.getNombre());
 			}
 			else 
 			{
 				ingredientes.add(ingrediente);
+				ingredientesName.add(ingrediente.getNombre());
 			}
 			linea = br.readLine();
 		}
@@ -118,13 +127,19 @@ public class Restaurante {
 			int precioBase = Integer.parseInt(informacion[1]);
 			int calorias = Integer.parseInt(informacion[2]);
 			Producto producto = new ProductoMenu(nombre, precioBase, calorias);
+			//zona taller 6 exceptions
 			if (menu.contains(producto))
+			{
+				throw new ProductoRepetidoException(producto.getNombre());
+			}
+			else if (menuName.contains(producto.getNombre()))
 			{
 				throw new ProductoRepetidoException(producto.getNombre());
 			}
 			else 
 			{
 				menu.add(producto);
+				menuName.add(producto.getNombre());
 			}
 			menu.add(producto);
 			linea = br.readLine();
