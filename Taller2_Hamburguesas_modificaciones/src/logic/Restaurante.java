@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.IngredienteRepetidoException;
+import exceptions.ProductoRepetidoException;
+
 public class Restaurante {
 	private List<Producto> menu = new ArrayList<>();
 	private List<Producto> bebidas = new ArrayList<>();
@@ -74,10 +77,17 @@ public class Restaurante {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (IngredienteRepetidoException e) {
+			e.getMessage();
+			e.printStackTrace();
+		} catch (ProductoRepetidoException e) {
+			e.getMessage();
+			e.printStackTrace();
 		}
+		
 	}
 	
-	private void cargarIngredientes(File archivoIngredientes) throws FileNotFoundException, IOException {
+	private void cargarIngredientes(File archivoIngredientes) throws FileNotFoundException, IOException,  IngredienteRepetidoException {
 		BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes));
 		String linea = br.readLine();
 		while (linea != null) {
@@ -86,13 +96,20 @@ public class Restaurante {
 			int costoAdicional = Integer.parseInt(informacion[1]);
 			int calorias = Integer.parseInt(informacion[2]);
 			Ingrediente ingrediente = new Ingrediente(nombre, costoAdicional, calorias);
-			ingredientes.add(ingrediente);
+			if (ingredientes.contains(ingrediente))
+			{
+				throw new IngredienteRepetidoException(ingrediente.getNombre());
+			}
+			else 
+			{
+				ingredientes.add(ingrediente);
+			}
 			linea = br.readLine();
 		}
 		br.close();
 	}
 	
-	private void cargarMenu(File archivoMenu) throws FileNotFoundException, IOException {
+	private void cargarMenu(File archivoMenu) throws FileNotFoundException, IOException, ProductoRepetidoException {
 		BufferedReader br = new BufferedReader(new FileReader(archivoMenu));
 		String linea = br.readLine();
 		while (linea != null) {
@@ -101,6 +118,14 @@ public class Restaurante {
 			int precioBase = Integer.parseInt(informacion[1]);
 			int calorias = Integer.parseInt(informacion[2]);
 			Producto producto = new ProductoMenu(nombre, precioBase, calorias);
+			if (menu.contains(producto))
+			{
+				throw new ProductoRepetidoException(producto.getNombre());
+			}
+			else 
+			{
+				menu.add(producto);
+			}
 			menu.add(producto);
 			linea = br.readLine();
 		}

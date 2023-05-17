@@ -2,16 +2,16 @@ package exceptions;
 
 public class IngredienteRepetidoException extends HamburguesaException {
 	
-	private ingredienteNombre;
+	private String IngredienteNombre;
 	
 	public IngredienteRepetidoException(String nombreingrediente)
 	{
 		super("Ingrediente repetido "+ nombreingrediente);
-		this.ingredienteNombre = nombreingrediente;
+		this.IngredienteNombre = nombreingrediente;
 	}
 	
 	public String getNombreIngrediente() 
 	{
-        return nombreIngrediente;
+        return IngredienteNombre;
     }
 }
