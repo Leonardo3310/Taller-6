@@ -1,0 +1,16 @@
+RESTAURANTE
+
+Factura de venta
+
+ID Factura:                  20230517002
+Cliente:                             LEO
+Direccion:                        BOGOTA
+
+Descripcion                        Valor
+
+Total calorias:                        0
+
+Valor Neto:                            0
+Valor IVA:                             0
+
+Valor Total:                           0

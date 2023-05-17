@@ -13,3 +13,4 @@ frijol refrito;4500;1
 queso fundido;4500;1
 tocineta picada;6000;1
 piña;2500;1
+caviar;200000;1
