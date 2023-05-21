@@ -79,6 +79,8 @@ public class Restaurante {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+			
+		//TRY CATCH TALLER 6	
 		} catch (IngredienteRepetidoException e) {
 			e.getMessage();
 			e.printStackTrace();
