@@ -1,6 +1,7 @@
 package testing;
 
 import static org.junit.Assert.assertEquals;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +10,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import logic.Combo;
-import logic.Producto;
 import logic.ProductoAjustado;
 import logic.ProductoMenu;
 

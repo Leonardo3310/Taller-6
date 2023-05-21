@@ -41,6 +41,11 @@ public class Pedido {
 		}
 		
 	}
+	
+	public int getCostico()
+	{
+		return costico;
+	}
 
 	private int getPrecioNetoPedido() {
 		int precioNeto = 0;
